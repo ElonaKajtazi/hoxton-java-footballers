@@ -1,0 +1,4 @@
+2022-10-06 21:30:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE FOOTBALLER\000d\000aDROP [*]ROW WHERE ID=133"; expected "identifier"; SQL statement:
+ALTER TABLE FOOTBALLER
+DROP ROW WHERE ID=133 [42001-214]
