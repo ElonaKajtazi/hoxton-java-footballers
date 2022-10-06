@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // - Seed the data to have at least 2-3 teams. ✅
 // - Write class methods:
 //   - Get the team with all its players ✅
-//   - Get a single player
+//   - Get a single player ✅
 //   - Add a person to a team ✅
 //   - Remove a person from a team
 //   - Change a player's scoreOutOfTen (if they improved in practce)
