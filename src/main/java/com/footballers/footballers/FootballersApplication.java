@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //   - Get the team with all its players ✅
 //   - Get a single player ✅
 //   - Add a person to a team ✅
-//   - Remove a person from a team
+//   - Remove a person from a team ✅ (Not sure if deleting a footballer is considered removing him form the team, but let's consider it done for now!)
 //   - Change a player's scoreOutOfTen (if they improved in practce)
 //   - Get the total score of a team. Do not include the replacement in the score(should we store it in a variable? If so why? If no, why not?)
 //   - Given 2 team id's find out which one would win (based on total score) and respond with a nice message to the user like "The Legless just got pwned hard by Estonia's Grandma Coalition"

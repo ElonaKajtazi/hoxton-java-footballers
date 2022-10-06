@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,17 +44,27 @@ public class FootballerController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-    // @GetMapping("/zoo-animals/{id}")
-    // public ResponseEntity<ZooAnimal> getSingleZooAnimal(@PathVariable Integer id)
-    // {
-    // Optional<ZooAnimal> match = zooAnimalRepo.findById(id);
 
-    // if (match.isPresent()) {
-    // return new ResponseEntity<>(match.get(), HttpStatus.OK);
-    // } else {
-    // return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    // }
-    // }
+    @DeleteMapping("/footballers/{id}")
+    public ResponseEntity<Reply> deleteFootballer(@PathVariable Integer id) {
+        Reply reply = new Reply();
+
+        if (footballerRepository.existsById(id)) {
+            footballerRepository.deleteById(id);
+            reply.message = "It worked!";
+            return new ResponseEntity<>(reply, HttpStatus.OK);
+        } else {
+            reply.error = "Not found";
+            return new ResponseEntity<>(reply, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+}
+
+class Reply {
+    public String message;
+    public String error;
 }
 
 interface FootballerRepository extends JpaRepository<Footballer, Integer> {
