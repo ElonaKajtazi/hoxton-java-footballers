@@ -3,7 +3,6 @@ package com.footballers.footballers;
 import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +23,7 @@ public class FootballerController {
     private FootballerRepository footballerRepository;
 
     @Autowired
-    private TeamRepository teamRepository;
+    private TeamRepo teamRepo;
 
     @GetMapping("/footballers")
     public List<Footballer> getAllFootballers() {
@@ -33,7 +32,7 @@ public class FootballerController {
 
     @PostMapping("teams/{teamId}/footballers")
     public Footballer createFootballer(@RequestBody Footballer footballerData, @PathVariable Integer teamId) {
-        footballerData.team = teamRepository.findById(teamId).get();
+        footballerData.team = teamRepo.findById(teamId).get();
         return footballerRepository.save(footballerData);
     }
 
@@ -70,10 +69,10 @@ public class FootballerController {
         }
         Footballer footballer = match.get();
         footballer.isReplacement = userSentData.isReplacement == null ? footballer.isReplacement
-                : footballer.isReplacement;
-        footballer.name = userSentData.name == null ? footballer.name : footballer.name;
+                : userSentData.isReplacement;
+        footballer.name = userSentData.name == null ? footballer.name : userSentData.name;
 
-        footballer.nationality = userSentData.nationality == null ? footballer.nationality : footballer.nationality;
+        footballer.nationality = userSentData.nationality == null ? footballer.nationality : userSentData.nationality;
         footballer.scoreOutOfTen = userSentData.scoreOutOfTen == null ? footballer.scoreOutOfTen
                 : userSentData.scoreOutOfTen;
                 
@@ -113,5 +112,5 @@ class Reply {
 interface FootballerRepository extends JpaRepository<Footballer, Integer> {
 }
 
-interface TeamRepository extends JpaRepository<Team, Integer> {
+interface TeamRepo extends JpaRepository<Team, Integer> {
 }
