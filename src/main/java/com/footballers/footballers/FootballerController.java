@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class FootballerController {
@@ -58,9 +60,50 @@ public class FootballerController {
             return new ResponseEntity<>(reply, HttpStatus.NOT_FOUND);
         }
     }
+    @PatchMapping("/footballers/{id}")
 
+    public Footballer updateFootballersScore(@RequestBody Footballer userSentData, @PathVariable Integer id) {
+        Optional<Footballer> match = footballerRepository.findById(id);
 
+        if (match.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
+        }
+        Footballer footballer = match.get();
+        footballer.isReplacement = userSentData.isReplacement == null ? footballer.isReplacement
+                : footballer.isReplacement;
+        footballer.name = userSentData.name == null ? footballer.name : footballer.name;
+
+        footballer.nationality = userSentData.nationality == null ? footballer.nationality : footballer.nationality;
+        footballer.scoreOutOfTen = userSentData.scoreOutOfTen == null ? footballer.scoreOutOfTen
+                : userSentData.scoreOutOfTen;
+                
+        return footballerRepository.save(footballer);
+    }
 }
+// @PatchMapping("/zoo-animals/{id}")
+// public ZooAnimal updateZooAnimal(@RequestBody ZooAnimal userSentData,
+// @PathVariable Integer id) {
+// Optional<ZooAnimal> match = zooAnimalRepo.findById(id);
+
+// if (match.isEmpty()) {
+// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find
+// resource");
+// }
+
+// ZooAnimal zooAnimal = match.get();
+// zooAnimal.isHungry = userSentData.isHungry == null ? zooAnimal.isHungry :
+// userSentData.isHungry;
+// zooAnimal.name = userSentData.name == null ? zooAnimal.name :
+// userSentData.name;
+// zooAnimal.species = userSentData.species == null ? zooAnimal.species :
+// userSentData.species;
+// zooAnimal.origin = userSentData.origin == null ? zooAnimal.origin :
+// userSentData.origin;
+
+// return zooAnimalRepo.save(zooAnimal);
+// }
+
+
 
 class Reply {
     public String message;
